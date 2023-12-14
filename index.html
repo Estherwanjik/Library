@@ -3,33 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Project</title>
-    <Link rel="stylesheet" href="style.css" ></Link>
+    <title>Library</title>
+    <script
+      src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
+      data-auto-a11y="true"
+    ></script>
+    <link rel="shortcut icon" href="./favicon/books.png" />
+    <Link rel="stylesheet" type="text/css" href="style.css" ></Link>
 </head>
 <body>
-    <h1>The Library</h1>
-    <div id="newBtn-container">
-        <button id="newBtn">+ New Book</button>
-    </div>
-    <div id="popUp">
-        <form id="form" action="/script.js">
-            <span class="close">&times;</span>
-            <ledgend>NEW BOOK</ledgend>
-            <div id="text input">
-                <p><input type='text' id='title' name='title' placeholder='Title'></p>
-                <p><input type='text' id='author' name='author' placeholder='Author'></p>
-                <p><input type='text' id='pages' name='pages' placeholder='Pages'></p>
-            </div>
-            <div id="checkBox">
-                <p><label >Read: </label><input type="checkbox" id="read" name="read" value="yes"></p>
-            </div>
-            <button type="submit" form="form" id="addBtn">Add</button>
-        </form>
-    </div>
-    <div id="Library-container"></div>
+    <header>
+        <h2>The Library</h2>
+        <div></div>
+        <div></div>
+        <!-- books to be added here -->
+    </header>
+    <button id="new-book">+</button>
+
+    <div class="overlay"></div>
+    <div class="bookshelf"></div>
+
+    <section id="popup">
+        <div id="container">
+            <h1>New Book</h1>
+            <div class="close">+</div>
+            <form id="form" action="/" method="GET">
+                <label for="title">Title:</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Book Title"
+                    autocomplete="off"
+                    required
+                /><br />
+                <label for="author">Author:</label>
+                <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    placeholder="Author"
+                    autocomplete="off"
+                    required
+                /><br />
+                <label for="pages">Number of pages</label>
+                <input
+                    type="number"
+                    id="pages"
+                    name="pages"
+                    placeholder="Pages"
+                    autocomplete="off"
+                    required
+                /><br />
+                <label for="read">Read the book?</label><br />
+                <select name="read" id="read">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                <br />
+                <input type="submit" value="Submit" /> 
+            </form>
+        </div>
+    </section>
 
   <script src="script.js"></script>   
 
-    
 </body>
 </html>
