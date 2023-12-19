@@ -43,62 +43,16 @@ function addBook(i) {
     let bookNode = document.createElement("div");
     bookNode.classList.add("book");
     bookNode.setAttribute("data-index", `${i}`);
-
     const title = document.getElementById("title").value;
-    let titleNode = document.createElement("h2");
-    titleNode.innerHTML = `Title: ${title}`;
-
     const author = document.getElementById("author").value;
-    let authorNode = document.createElement("h3");
-    authorNode.innerHTML = `Author: ${author}`;
-
     const pages = document.getElementById("pages").value;
-    let pageNode = document.createElement("h3");
-    pageNode.innerHTML = `Pages: ${pages}`;
-
     const read = document.getElementById("read").value;
-    let readNode = document.createElement("h3");
-    readNode.innerHTML = `Read? ${read}${read === "Yes" ? "😃" : "😢"}`;
-
-    let updateNode = document.createElement("button");
-    updateNode.classList = "update";
-    updateNode.innerHTML = `Update <i class="fas fa-pen"></i>`;
-
-    let trashNode = document.createElement("button");
-    trashNode.classList = "trash";
-    trashNode.innerHTML = `Delete <i class="fas fa-trash-alt">`;
-
     const book = new Book(title, author, pages, read);
     books.push(book);
     localStorage.setItem("books", JSON.stringify(books));
-    bookNode.appendChild(titleNode);
-    bookNode.appendChild(authorNode);
-    bookNode.appendChild(pageNode);
-    bookNode.appendChild(readNode);
-    bookNode.appendChild(updateNode);
-    bookNode.appendChild(trashNode);
-    bookshelf.appendChild(bookNode);
     formOpenOrClosed();
     form.reset();
 
-    //update book status
-    updateNode.addEventListener("click", () => {
-        if(readNode.innerHTML === "Read? No") {
-            readNode.innerHTML = "Read? Yes";
-            book.read = "YES";
-            localStorage.setItem("books", JSON.stringify(books));
-        } else {
-            readNode.innerHTML = "Read? NO";
-            book.read = "NO";
-            localStorage.setItem("books", JSON.stringify(books));
-        }
-    });
-    //deleting the book
-    trashNode.addEventListener("click", () => {
-        bookshelf.removeChild(bookNode);
-        books.splice(bookNode, 1);
-        localStorage.setItem("books", JSON.stringify(books));
-      });
 }
 function getBooks() {
     books.forEach(function(book, i) {
@@ -121,11 +75,16 @@ function getBooks() {
         const read = document.getElementById("read").value;
         let readNode = document.createElement("h3");
         readNode.innerHTML = `Read? ${book.read}${
-          book.read === "Yes" ? "😃" : "😢"
+            book.read === "Yes" ? " 😃" : " 😢"
         }`;
-        let updateNode = document.createElement("button");
-        updateNode.classList = "update";
-        updateNode.innerHTML = `Update <i class="fas fa-pen"></i>`;
+        let markreadNode = document.createElement("button");
+        markreadNode.classList = "mark read";
+        if(book.read === "Yes") {
+            markreadNode.innerHTML = `Mark unread<i class="fas fa-pen"></i>`;
+        }else{
+            book.read === "No" 
+            markreadNode.innerHTML = `Mark read<i class="fas fa-pen"></i>`;
+        }
 
         let trashNode = document.createElement("button");
         trashNode.classList = "trash";
@@ -135,19 +94,23 @@ function getBooks() {
         bookNode.appendChild(authorNode);
         bookNode.appendChild(pageNode);
         bookNode.appendChild(readNode);
-        bookNode.appendChild(updateNode);
+        bookNode.appendChild(markreadNode);
         bookNode.appendChild(trashNode);
         bookshelf.appendChild(bookNode);
     
          // update book status
-        updateNode.addEventListener("click", () => {
-            if (readNode.innerHTML === "Read? No😢") {
-            readNode.innerHTML = "Read? Yes😃";
+        markreadNode.addEventListener("click", () => {
+            if (book.read === "No") {
+            console.log('i was here')   
+            readNode.innerHTML = "Read? Yes 😃";
             book.read = "Yes";
+            markreadNode.innerHTML = `Mark unread <i class="fas fa-pen"></i>`;
             localStorage.setItem("books", JSON.stringify(books));
             } else {
-            readNode.innerHTML = "Read? No😢";
+            readNode.innerHTML = "Read? No 😢";
+            console.log('i was here too')
             book.read = "No";
+            markreadNode.innerHTML = `Mark read <i class="fas fa-pen"></i>`;
             localStorage.setItem("books", JSON.stringify(books));
             }
         })
@@ -163,9 +126,7 @@ window.addEventListener("load", getBooks);
 newBook.addEventListener("click", formOpenOrClosed);
 closeButton.addEventListener("click", closeModal);
 form.addEventListener("submit", (e, i) => {
-    console.log('i was here')
     e.preventDefault();
-    console.log('i was here')
     addBook(i);
-    console.log('books')
+    window.location.reload();
 });  
